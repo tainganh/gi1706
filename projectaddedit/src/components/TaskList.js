@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import TaskItem from './TaskItem';
 class TaskList extends Component {
 render() {
+    var {tasks}= this.props;
+    var elmTasks=tasks.map((task, index) => {//lay tung phan tu va index di tu 0
+        return <TaskItem key={task.id} index={index} task={task}/>
+    });
     return (
         <table className="table table-bordered table-hover">
             <thead>
@@ -27,7 +31,7 @@ render() {
                     </td>
                     <td></td>
                 </tr>
-                <TaskItem/>
+                {elmTasks}
             </tbody>
         </table>
     );
