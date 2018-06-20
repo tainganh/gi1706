@@ -8,7 +8,8 @@ class App extends Component {
     constructor(props){
       super(props);
       this.state ={
-        tasks : []
+        tasks : [],
+        isDisplayForm: false
       }
     }
     //No se duoc goi khi component duoc gan vao va chi duoc goi duy nhat 1 lan
@@ -57,8 +58,20 @@ class App extends Component {
       return this.s4() + this.s4() + '-' +this.s4() + '-'+this.s4() + '-'+this.s4() + '-'+this.s4() +this.s4() +this.s4() ;
 
     }
+    onThemcongviec = ()=>{
+      this.setState({
+        isDisplayForm: !this.state.isDisplayForm
+      });
+    }
+    onCloseForm = ()=>{
+      this.setState({
+        isDisplayForm: false
+      });
+    }
   render() {
-    var {tasks} =this.state; // tuong duong voi var tasks=this.state.tasks;
+    
+    var {tasks, isDisplayForm} =this.state; // tuong duong voi var tasks=this.state.tasks;
+    var elmTaskForm= isDisplayForm ? <TaskForm onCloseForm={this.onCloseForm}/> : '';
     return (
       <div className="container">
         <div className="text-center">
@@ -66,19 +79,24 @@ class App extends Component {
           <hr />
         </div>
         <div className="row">
-          <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-               <TaskForm/>
+          <div className={isDisplayForm? 'col-xs-4 col-sm-4 col-md-4 col-lg-4'
+                                       : ''}>
+               {/* <TaskForm/> */}
+               {elmTaskForm}
           </div>
-          <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-            <button type="button" className="btn btn-primary">
+          <div className={isDisplayForm ? 'col-xs-8 col-sm-8 col-md-8 col-lg-8'
+                                        : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
+            <button type="button"
+                    className="btn btn-primary" 
+                    onClick={this.onThemcongviec}>
               <span className="fa fa-plus mr-5"></span>Thêm Công Việc
             </button>
             <button 
                 type="button" 
-                className="btn btn-primary"
+                className="btn btn-success ml-5"
                 onClick={this.onGenerateData}
                 >
-              <span className="fa fa-plus mr-5"></span>Generate Data
+              Generate Data
             </button>
             {/* Search và sort */}
                 <Control/>
